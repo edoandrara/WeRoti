@@ -1,195 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- FAVICON -->
-    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-
-    <!-- Remixicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.7.0/remixicon.css">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="/assets/css/style.css">
-
-    <title>Kokiro - Official Page</title>
+    <title>Music Player</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Header -->
-    <hearder class="header" id="header">
-        <nav class="nav container">
-            <a href="#" class="nav__logo">Kokiro</a>
-
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li class="nav__item">
-                        <a href="#home" class="nav__link">Home</a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#new" class="nav__link">Info</a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#about" class="nav__link">Tentang Kami</a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#favorite" class="nav__link">Favorit</a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#visit" class="nav__link">Lokasi</a>
-                    </li>
+    <div class="welcome-panel" id="welcomePanel">
+        <div class="welcome-content">
+            <div class="welcome-logo">INFORMASI</div>
+            <div class="welcome-subtitle">Temukan, putar, dan unduh musik favorit Anda di Music Player.</div>
+            <div class="welcome-about">
+                <p>MusicPlayer adalah aplikasi web sederhana yang memungkinkan Anda mencari lagu dari YouTube, memutarnya langsung di browser Anda, dan mengunduhnya dalam format MP3.</p>
+            </div>
+            <div class="welcome-thanks">
+                <div class="thanks-title">WEBSITE OWNER</div>
+                <ul class="thanks-list">
+                    <li><strong>EDO PRATAMA</strong> - adalah pemilik utama dan dia memiliki istri yang jadi pemilik ke 2</li>
+                    <li><strong>KINAYA RARA ALUNA</strong> - adalah pemilik ke 2 yaitu istrinya</li>
+                    <li><strong>Anda</strong> - Untuk menggunakan website dengan baik² dan tampa iklan</li>
                 </ul>
-                
-                <!-- Button Tutup -->
-                 <div class="nav__close" id="nav-close">
-                    <i class="ri-close-line"></i>
-                 </div>
-
-                 <img src="assets/img/bread-4.png" alt="image" class="nav__img-1">
-                 <img src="assets/img/bread-1.png" alt="image" class="nav__img-2">
             </div>
+            <button id="welcomeCloseBtn" class="welcome-btn">Tekan untuk lanjutkan ke Music Player</button>
+        </div>
+    </div>
 
-            <!-- Button Hamburger -->
-             <div class="nav__toggle" id="nav-toggle">
-                <i class="ri-menu-2-line"></i>
-             </div>
-        </nav>
-    </hearder>
+    <div class="container">
+        <div class="header">
+            <a href="#" class="logo" id="logoLink">MusicPlayer</a>
+            <p class="site-description">Temukan, putar, dan unduh musik favorit Anda dengan mudah.</p>
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Cari lagu, artis, atau album...">
+                <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i> Cari</button>
+            </div>
+        </div>
 
-    <!-- Main -->
-    <main class="main">
-        <!-- Home -->
-        <section class="home section" id="home">
-            <img src="assets/img/home-bg.jpg" alt="image" class="home__bg">
-            <div class="home__shadow"></div>
+        <div class="history-section" id="historySection">
+            <h2 class="section-title"><i class="fas fa-history"></i> Terakhir Diputar</h2>
+            <div class="history-list" id="historyList"></div>
+        </div>
 
-            <div class="home__container container grid">
-                <div class="home__data">
-                    <h1 class="home__title">
-                        Home-made Bread <br> The Best Quality!
-                    </h1>
+        <div class="results-section" id="resultsSection">
+            <h2 class="section-title"><i class="fas fa-music"></i> <span id="searchResultTitle">Hasil Pencarian</span></h2>
+            <div class="results-container" id="results"></div>
+        </div>
 
-                    <a href="#" class="button">Pilih Rotinya!</a>
-                    <img src="assets/img/bread-1.png" alt="image" class="home__bread">
+        <div class="loading">
+            <div class="loader"></div>
+            <div class="loading-text">LOADING...</div>
+        </div>
+
+        <div class="no-results">
+            <h3>Tidak ada hasil yang ditemukan</h3>
+            <p>Coba kata kunci lain</p>
+        </div>
+    </div>
+
+    <div class="player-minimized hidden" id="playerMini">
+        <div class="now-playing-mini">
+            <img src="/api/placeholder/45/45" alt="Now playing" class="now-thumbnail-mini" id="miniThumbnail">
+            <div class="now-info">
+                <div class="song-title" id="miniTitle">Judul Lagu</div>
+                <div class="song-artist" id="miniArtist">Nama Artis</div>
+            </div>
+        </div>
+        <div class="mini-controls">
+            <button class="control-btn" id="miniPlayBtn"><i class="fas fa-play"></i></button>
+            <button class="control-btn" id="miniNextBtn"><i class="fas fa-step-forward"></i></button>
+        </div>
+    </div>
+
+    <div class="player-full" id="playerFull">
+        <div class="player-header">
+            <button class="back-btn" id="minimizeBtn"><i class="fas fa-chevron-down"></i></button>
+            <div class="player-title">Now Playing</div>
+            <div style="width: 24px;"></div>
+        </div>
+
+        <div class="player-content">
+            <img src="/api/placeholder/300/300" alt="Now playing" class="now-thumbnail-large" id="fullThumbnail">
+            <div class="now-info-large">
+                <div class="now-title-large" id="fullTitle">Judul Lagu</div>
+                <div class="now-artist-large" id="fullArtist">Nama Artis</div>
+            </div>
+            <div class="progress-container-large">
+                <div class="progress-bar-large" id="progressBarLarge">
+                    <div class="progress-large" id="progressLarge"></div>
                 </div>
-
-                <div class="home__image">
-                    <img src="assets/img/home-bread.png" alt="image" class="home__img">
+                <div class="time-display">
+                    <span id="currentTimeLarge">0:00</span>
+                    <span id="totalTimeLarge">0:00</span>
                 </div>
-
-                <footer class="home__footer">
-                    <div class="home__location">
-                        <i class="ri-map-pin-line"></i>
-                        <span>Lorem Ipsum <br> Depok, Jawa Barat</span>
-                    </div>
-
-                    <div class="home__social">
-                        <a href="#" target="_blank">
-                            <i class="ri-facebook-circle-line"></i>
-                        </a>
-
-                        <a href="#" target="_blank">
-                            <i class="ri-instagram-line"></i>
-                        </a>
-
-                        <a href="#" target="_blank">
-                            <i class="ri-whatsapp-line"></i>
-                        </a>
-                    </div>
-                </footer>
             </div>
-        </section>
-
-        <!-- News -->
-        <section class="new section" id="new">
-            <h2 class="section__title">Roti Terbaru</h2>
-
-            <div class="new__container container grid">
-                <div class="new__content grid">
-                    <article class="new__card">
-                        <h2 class="new__title">Roti Bulat</h2>
-                        <p class="new__description">Dimasak dengan panas yang rata.</p>
-
-                        <img src="assets/img/new-bread-1.png" alt="image" class="new__img">
-                    </article>
-
-                    <article class="new__card">
-                        <h2 class="new__title">Roti Baguette</h2>
-                        <p class="new__description">Roti khas Prancis yang terkenal.</p>
-
-                        <img src="assets/img/new-bread-2.png" alt="image" class="new__img">
-                    </article>
-
-                    <article class="new__card">
-                        <h2 class="new__title">Roti Cookies</h2>
-                        <p class="new__description">Dengan campuran cookies kecil dan lumer</p>
-
-                        <img src="assets/img/new-bread-3.png" alt="image" class="new__img">
-                    </article>
-                </div>
-
-                <a href="#" class="new__button button">Lihat Roti Lain</a>
+            <div class="controls-large">
+                <button class="control-btn-large" id="shuffleBtn"><i class="fas fa-random"></i></button>
+                <button class="control-btn-large" id="prevBtnLarge"><i class="fas fa-step-backward"></i></button>
+                <button class="control-btn-large play-btn-large" id="playBtnLarge"><i class="fas fa-play"></i></button>
+                <button class="control-btn-large" id="nextBtnLarge"><i class="fas fa-step-forward"></i></button>
+                <button class="control-btn-large" id="repeatBtn"><i class="fas fa-redo"></i></button>
             </div>
-        </section>
+            <button class="download-btn" id="downloadBtnLarge"><i class="fas fa-download"></i> Download MP3</button>
+            <button class="download-btn" id="downloadMp4Btn"><i class="fas fa-video"></i> Download MP4</button>
+        </div>
 
-        <!-- About -->
-        <section class="about section" id="about">
-            <div class="about__container container grid">
-                <div class="about__data">
-                    <h2 class="section__title">About Us</h2>
-                    <p class="about__description">
-                        Di KOKIRO, semua pesanan dibuat dengan bahan-bahan berkualitas dan disiapkan dengan hati-hati, 
-                        memastikan setiap gigitan dan tegukan memberikan pengalaman terbaik. Melalui sistem pemesanan online yang praktis, 
-                        Anda bisa menikmati pilihan kopi dan roti favorit hanya dengan beberapa klik, baik itu untuk memulai hari Anda atau teman bersantai di sore hari.
-                    </p>
+        <div class="next-up-container">
+            <h3 class="next-up-title"><i class="fas fa-stream"></i> Next Up</h3>
+            <div class="next-up-list" id="queueList"></div>
+        </div>
+    </div>
 
-                    <a href="#" class="button">Kenali Lebih Lanjut</a>
+    <audio id="audioPlayer" style="display: none;"></audio>
 
-                    <img src="assets/img/bread-2.png" alt="image" class="about__bread">
-                </div>
+    <script>
+        document.getElementById("welcomeCloseBtn").addEventListener("click", () => {
+            document.getElementById("welcomePanel").style.display = "none";
+        });
 
-                <img src="assets/img/about-bread.png" alt="image" class="about__img">
-            </div>
-        </section>
+        const searchBtn = document.getElementById("searchBtn");
+        const searchInput = document.getElementById("searchInput");
+        const resultsContainer = document.getElementById("results");
 
-        <!-- Favorites -->
-        <section class="favorite section" id="favorite">
-            <h2 class="section__title">Customer Favorites</h2>
+        let currentVideoId = null;
 
-            <div class="favorite__container container grid">
-                <article class="favorite__card">
-                    <img src="assets/img/favorite-bread-1.png" alt="image" class="favorite__img">
+        searchBtn.addEventListener("click", () => {
+            const keyword = searchInput.value;
+            if (!keyword) return;
+            // Dummy result untuk contoh
+            resultsContainer.innerHTML = "";
+            const videoId = "dQw4w9WgXcQ"; // Contoh ID YouTube
+            const resultItem = document.createElement("div");
+            resultItem.className = "result-item";
+            resultItem.innerHTML = `<p>${keyword}</p>`;
+            resultItem.addEventListener("click", () => {
+                currentVideoId = videoId;
+                alert("Memutar video: " + videoId);
+            });
+            resultsContainer.appendChild(resultItem);
+        });
 
-                    <div class="favorite__data">
-                        <h2 class="favorite__title"></h2>
-                        <span class="favorite__subtitle"></span>
-                        <h3 class="favorite__price"></h3>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- Visit -->
-        <section class="visit section" id="visit">
-
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-
-    </footer>
-
-    <!-- Scroll Up -->
-
-    <!-- Scrollreveal -->
-    <script src=""></script>
-
-    <!-- Main JS -->
-     <script src="assets/js/main.js"></script>
+        document.getElementById("downloadMp4Btn").addEventListener("click", function () {
+            if (!currentVideoId) {
+                alert("Video tidak ditemukan.");
+                return;
+            }
+            const downloadUrl = `https://www.y2mate.com/youtube/${currentVideoId}`;
+            window.open(downloadUrl, "_blank");
+        });
+    </script>
 </body>
 </html>
